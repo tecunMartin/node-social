@@ -1,4 +1,8 @@
-const TABLA = 'user';
+const { nanoid }        = require('nanoid');
+const bodyParser    = require('body-parser');
+const auth          = require('../auth');
+
+const TABLA = 'users';
 module.exports = function (injectedStore) {
     let store = injectedStore;
     if ( !store ) {
@@ -14,14 +18,25 @@ module.exports = function (injectedStore) {
     }
 
     // Creamos funcion para agregar un usuario
-    function add( id, UserName ) {
-        if ( !UserName || !id ) {
-            return Promise.reject('NO VIENE EL NOMBRE.');
-        }
+    async function add( body ) {
         const user = {
-            id: id,
-            name: UserName
+            name: body.name,
+            username: body.userName
         }
+        if ( body.id ) {
+            user.id = body.id
+        } else {
+            user.id = nanoid();
+        }
+
+        if ( body.password || body.username ) {
+            await auth.upsert({
+                id: user.id,
+                username: user.username,
+                password: body.password,
+            })
+        }
+
         return store.upsert(TABLA, user)
     }
 

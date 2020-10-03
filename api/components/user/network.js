@@ -1,25 +1,33 @@
 const express        = require('express');
 const response       = require('../../../network/response');
+const { list }       = require('../../../store/dummy');
 const controller     = require('./index')
 const router         = express.Router();
 
-router.get('/',     ( req, res )=>{
+// Routes
+router.get  ('/',    listNetwork);
+router.get  ('/:id', get);
+router.post ('/',    upset);
+router.put  ('/',    upset);
+
+// Internal functiones
+function listNetwork( req, res ) {
     controller.list()
-    .then ((list) => response.success(req, res, list, 200))
-    .catch((err)  => response.error  (req, res,err.message, 500));
-});
+    .then ( lista => response.success(req, res, lista, 200))
+    .catch( e     => response.error  (req, res, e.message, 500));
+}
 
-router.get('/:id',  ( req, res )=>{
+
+function get( req, res ) {
     controller.get(req.params.id)
-    .then ((lista) => response.success(req, res, lista, 200))
-    .catch((err)   => response.error   (req, res, err.message, 500));
-});
+    .then ( user =>  response.success(req, res, user, 200))
+    .catch( err  =>  response.error  (req, res, err.message, 500));
+}
 
-// Creamos la ruta para agregar usuarios.
-router.post('/',    ( req, res ) => {
-    controller.add( req.body.id, req.body.name )
-    .then (( name ) => response.success(req, res, name, 201))
-    .catch(( err )  => response.error  (req, res, 'Error interno', 500));
-});
+function upset( req, res ) {
+    controller.add(req.body)
+    .then ( user   => response.success(req, res, user, 200))
+    .catch( e      => response.error  (req, res, e.message, 500));
+}
 
 module.exports = router;
