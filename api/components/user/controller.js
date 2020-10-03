@@ -8,7 +8,7 @@ module.exports = function (injectedStore) {
     if ( !store ) {
        store = require('../../../store/dummy');
     }
-
+    
     function list() {
         return store.list(TABLA);
     }
@@ -21,7 +21,7 @@ module.exports = function (injectedStore) {
     async function add( body ) {
         const user = {
             name: body.name,
-            username: body.userName
+            username: body.username
         }
         if ( body.id ) {
             user.id = body.id

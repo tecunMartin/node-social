@@ -17,7 +17,6 @@ function listNetwork( req, res ) {
     .catch( e     => response.error  (req, res, e.message, 500));
 }
 
-
 function get( req, res ) {
     controller.get(req.params.id)
     .then ( user =>  response.success(req, res, user, 200))
