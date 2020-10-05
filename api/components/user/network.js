@@ -24,10 +24,10 @@ function get( req, res ) {
     .catch( err  =>  response.error  (req, res, err.message, 500));
 }
 
-function upset( req, res ) {
+function upset( req, res, next ) {
     controller.add(req.body)
     .then ( user   => response.success(req, res, user, 201))
-    .catch( e      => response.error  (req, res, e.message, 500));
+    .catch( next );
 }
 
 module.exports = router;

@@ -2,7 +2,8 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 const secret = config.jwt.secret;
-const chalk = require('chalk');
+
+const error = require('../utils/error');
 
 function sign( data ) {
     return jwt.sign(data, secret);
@@ -12,27 +13,28 @@ function verify( token ) {
     try {
         return jwt.verify(token, secret);
     } catch (error) {
-        throw new Error("ESTE ES:"+error.message);
+        throw error(error.message, 500);
     }
 }
 
 const check = {
     own: function( req, owner ) {
         const decoded = decodeHeader(req);
+        
         // COMPROBAR SI ES O NO PROPIO.
         if ( decoded.id !== owner ) {
-            throw new Error('NO PUEDES HACER ESTO');
+            throw error('No puedes hacer esto', 401);
         }
     },
 }
 
 function getToken( auth ) {
     if ( !auth ) {
-        throw new Error('No viene token');
+        throw error('No viene token', 401);
     }
     
     if ( auth.indexOf('Bearer') === -1 ) {
-        throw new Error('Formato invalido');
+        throw error('Formato invalido', 401);
     }
     let token = auth.replace('Bearer ', '');
     return token;
