@@ -1,9 +1,9 @@
-const bcrypt = require('bcrypt');
-const auth = require('../../../auth/index');
-const TABLA = 'auth';
+const bcrypt    = require('bcrypt');
+const auth      = require('../../../auth/index');
+const TABLA     = 'auth';
 
-module.exports = function (injectedStore) {
-    let store = injectedStore;
+module.exports  = function (injectedStore) {
+    let store   = injectedStore;
     if ( !store ) {
        store = require('../../../store/dummy');
     }

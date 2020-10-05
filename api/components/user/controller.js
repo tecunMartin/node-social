@@ -1,9 +1,9 @@
-const { nanoid }        = require('nanoid');
+const { nanoid }    = require('nanoid');
 const bodyParser    = require('body-parser');
 const auth          = require('../auth');
 
-const TABLA = 'users';
-module.exports = function (injectedStore) {
+const TABLA         = 'users';
+module.exports      = function (injectedStore) {
     let store = injectedStore;
     if ( !store ) {
        store = require('../../../store/dummy');

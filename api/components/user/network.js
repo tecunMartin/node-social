@@ -1,4 +1,5 @@
 const express        = require('express');
+const secure         = require('./secure');
 const response       = require('../../../network/response');
 const { list }       = require('../../../store/dummy');
 const controller     = require('./index')
@@ -8,7 +9,7 @@ const router         = express.Router();
 router.get  ('/',    listNetwork);
 router.get  ('/:id', get);
 router.post ('/',    upset);
-router.put  ('/',    upset);
+router.put  ('/', secure('update'), upset);
 
 // Internal functiones
 function listNetwork( req, res ) {
@@ -25,7 +26,7 @@ function get( req, res ) {
 
 function upset( req, res ) {
     controller.add(req.body)
-    .then ( user   => response.success(req, res, user, 200))
+    .then ( user   => response.success(req, res, user, 201))
     .catch( e      => response.error  (req, res, e.message, 500));
 }
 
