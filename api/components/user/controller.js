@@ -1,48 +1,55 @@
-const { nanoid }    = require('nanoid');
-const bodyParser    = require('body-parser');
-const auth          = require('../auth');
+const { nanoid } = require('nanoid');
+const auth = require('../auth');
 
-const TABLA         = 'users';
-module.exports      = function (injectedStore) {
-    let store = injectedStore;
-    if ( !store ) {
-       store = require('../../../store/dummy');
-    }
-    
-    function list() {
-        return store.list(TABLA);
-    }
-    
-    function get(id) {
-        return store.get(TABLA, id);
-    }
+const TABLA = 'users';
+module.exports = function (injectedStore) {
+  let store = injectedStore;
+  if (!store) {
+    store = require('../../../store/dummy');
+  }
 
-    // Creamos funcion para agregar un usuario
-    async function add( body ) {
-        const user = {
-            name: body.name,
-            username: body.username
-        }
-        if ( body.id ) {
-            user.id = body.id
-        } else {
-            user.id = nanoid();
-        }
+  function list() {
+    return store.list(TABLA);
+  }
 
-        if ( body.password || body.username ) {
-            await auth.upsert({
-                id: user.id,
-                username: user.username,
-                password: body.password,
-            })
-        }
+  function get(id) {
+    return store.get(TABLA, id);
+  }
 
-        return store.upsert(TABLA, user)
+  // Creamos funcion para agregar un usuario
+  async function add(body) {
+    const user = {
+      name: body.name,
+      username: body.username,
+    };
+
+    if (body.id) {
+      user.id = body.id;
+    } else {
+      user.id = nanoid();
     }
 
-    return {
-        list,
-        get,
-        add,
+    if (body.password || body.username) {
+      await auth.upsert({
+        id: user.id,
+        username: user.username,
+        password: body.password,
+      });
     }
-}
+    return store.upsert(TABLA, user);
+  }
+
+  async function follow(from, to) {
+    return await store.upsert(TABLA + '_follow', {
+      user_from: from,
+      user_to: to,
+    });
+  }
+
+  return {
+    list,
+    get,
+    add,
+    follow,
+  };
+};
