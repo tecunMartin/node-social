@@ -37,7 +37,7 @@ module.exports = function (injectedStore) {
   }
 
   return {
-    upsert,
     login,
+    upsert,
   };
 };

@@ -1,15 +1,14 @@
 const express = require('express');
 const secure = require('./secure');
 const response = require('../../../network/response');
-const { list } = require('../../../store/dummy');
-const controller = require('./index');
-const err = require('../../../utils/error');
+const controller = require('./user-index');
 const router = express.Router();
 
 // Routes
 router.get('/', listNetwork);
 router.get('/:id', get);
 router.post('/follow/:id', secure('follow'), follow);
+router.get('/:id/following', following);
 router.post('/', upset);
 router.put('/', secure('update'), upset);
 
@@ -40,6 +39,13 @@ function follow(req, res, next) {
     .follow(req.user.id, req.params.id)
     .then((data) => response.success(req, res, data, 201))
     .catch(next);
+}
+
+function following(req, res, next) {
+  controller
+    .following(req.params.id)
+    .then((data) => response.success(req, res, data, 200))
+    .catch((err) => next);
 }
 
 module.exports = router;

@@ -1,7 +1,6 @@
 const express = require('express');
 const response = require('../../../network/response');
-const { list } = require('../../../store/dummy');
-const controller = require('./index');
+const controller = require('./auth-index');
 const router = express.Router();
 
 // Routes

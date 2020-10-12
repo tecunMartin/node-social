@@ -75,6 +75,17 @@ function update(table, data) {
   });
 }
 
+/* Funcion para elimnar */
+function remove(table, id) {
+  return new Promise((resolve, reject) => {
+    // DELETE FROM `post` WHERE `post`.`id` = 1"
+    connection.query(`DELETE FROM ${table} WHERE id = ${id}`, (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    });
+  });
+}
+
 /* Funcion encargada de despachar un insert o un update */
 async function upsert(table, data) {
   let row = [];
@@ -88,9 +99,16 @@ async function upsert(table, data) {
   }
 }
 
-function query(table, query) {
+function query(table, query, join) {
+  let joinQuery = '';
+  if (join) {
+    const key = Object.keys(join)[0];
+    const val = join[key];
+    joinQuery = `JOIN ${key} ON ${table}.${val} = ${key}.id`;
+  }
+
   return new Promise((resolve, reject) => {
-    connection.query(`SELECT * FROM ${table} WHERE ?`, query, (err, res) => {
+    connection.query(`SELECT * FROM ${table} ${joinQuery} WHERE ${table}.?`, query, (err, res) => {
       if (err) return reject(err);
       resolve(res[0] || null);
     });
@@ -102,4 +120,5 @@ module.exports = {
   get,
   upsert,
   query,
+  remove,
 };

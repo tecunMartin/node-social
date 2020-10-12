@@ -12,6 +12,10 @@ module.exports = function checkAuth(action) {
         auth.check.loggend(req);
         next();
         break;
+      case 'create':
+        auth.check.loggend(req);
+        next();
+        break;
       default:
         next();
     }

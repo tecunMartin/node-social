@@ -1,7 +1,7 @@
 {
-  "name": "proyecto-backend-node-platzi",
+  "name": "CURSO_PRACTICO_NODE",
   "version": "1.0.0",
-  "description": "Este servidor es parte del curso practico de node",
+  "description": "Servidor para el manejo de una red social con node y MySQL",
   "main": "index.js",
   "scripts": {
     "start": "nodemon api/index.js"
