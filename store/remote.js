@@ -7,9 +7,29 @@ function createRemoteDB(host, port) {
     return req('GET', table);
   }
 
+  function insert(table, data) {
+    return req('POST', table, data);
+  }
+
+  function update(table, data) {
+    return req('PUT', table, data);
+  }
+
+  function upsert(table, data) {
+    if (data.id) return update(table, data);
+    return insert(table, data);
+  }
+
   function req(method, table, data) {
     let url = URL + '/' + table;
     body = '';
+
+    if (method === 'GET' && data) {
+      url += '/' + data;
+    } else if (data) {
+      body = JSON.stringify(data);
+    }
+
     return new Promise((resolve, reject) => {
       request(
         {
@@ -34,6 +54,7 @@ function createRemoteDB(host, port) {
 
   return {
     list,
+    upsert,
   };
 }
 module.exports = createRemoteDB;

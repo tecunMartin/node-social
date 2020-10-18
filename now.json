@@ -10,7 +10,9 @@
     "MYSQL_PASSWORD": "btfekVCSFD",
     "MYSQL_DATABASE": "jIS4DdPPXX",
     "MYSQL_SRV_PORT": "3001",
-    "MYSQL_SRV_HOST": "localhost"
+    "MYSQL_SRV_HOST": "localhost",
+    "CACHE_SRV_PORT": "3003",
+    "CACHE_SRV_HOST": "localhost"
   },
   "builds": [
     {

@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/', listPost);
 router.get('/:id', getPost);
 router.post('/', secure('create'), addPost);
-router.delete('/:id', secure('owner'), deletePost);
+router.delete('/:id', secure('create'), deletePost);
 
 function listPost(req, res, next) {
   controller
