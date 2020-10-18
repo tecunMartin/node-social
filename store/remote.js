@@ -21,11 +21,12 @@ function createRemoteDB(host, port) {
   }
 
   function req(method, table, data) {
-    let url = URL + '/' + table;
+    let url = `${URL}/${table}`;
     body = '';
 
     if (method === 'GET' && data) {
-      url += '/' + data;
+      /* http://localhost:3000/users/ */
+      url += `/${data}`;
     } else if (data) {
       body = JSON.stringify(data);
     }

@@ -15,20 +15,20 @@ function list(table) {
       if (err) return reject(err);
       let res = data || null;
       if (data) {
-        res = JSON.stringify(data);
+        res = JSON.parse(data);
       }
       resolve(res);
     });
   });
 }
 
-function get(table, id) {
+/* function get(table, id) {
   return new Promise((resolve, reject) => {
     client.get(table, (err, data) => {
       if (err) return reject(err);
     });
   });
-}
+} */
 
 async function upsert(table, data) {
   let key = table;
@@ -41,6 +41,6 @@ async function upsert(table, data) {
 
 module.exports = {
   list,
-  get,
+  /* get, */
   upsert,
 };
