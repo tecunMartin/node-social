@@ -22,10 +22,6 @@
     {
       "src": "post/post-index.js",
       "use": "@now/node"
-    },
-    {
-      "src": "api/swagger.json",
-      "use": "@now/node"
     }
   ],
   "routes": [
@@ -43,7 +39,7 @@
     },
     {
       "src": "/api-docs(.*)",
-      "dest": "api/index.js"
+      "dest": "/api/index.js"
     }
   ]
 }

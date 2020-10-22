@@ -5,8 +5,11 @@ const controller = require('./user-index');
 const router = express.Router();
 
 // Routes
+/* Lista los usuarios */
 router.get('/', listNetwork);
+/* Lista un unico usuario */
 router.get('/:id', get);
+/* Para hacer quien sigue a quien */
 router.post('/follow/:id', secure('follow'), follow);
 router.get('/:id/following', following);
 router.post('/', upset);
