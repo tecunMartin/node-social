@@ -95,7 +95,7 @@ _Autor de inicio a fin de el proyecto._
 
 ## Licencia 📄
 
-Este proyecto está bajo la Licencia MIT License - mira el archivo [LICENSE.md](LICENSE.md) para detalles.
+Este proyecto está bajo la Licencia MIT License - mira el archivo [LICENSE.md](LICENSE) para detalles.
 
 ## Expresiones de Gratitud 🎁
 
